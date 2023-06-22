@@ -11,31 +11,31 @@ import (
 	gomock "github.com/golang/mock/gomock"
 )
 
-// MockAlbumRepo is a mock of AlbumRepo interface.
-type MockAlbumRepo struct {
+// MockRepo is a mock of Repo interface.
+type MockRepo struct {
 	ctrl     *gomock.Controller
-	recorder *MockAlbumRepoMockRecorder
+	recorder *MockRepoMockRecorder
 }
 
-// MockAlbumRepoMockRecorder is the mock recorder for MockAlbumRepo.
-type MockAlbumRepoMockRecorder struct {
-	mock *MockAlbumRepo
+// MockRepoMockRecorder is the mock recorder for MockRepo.
+type MockRepoMockRecorder struct {
+	mock *MockRepo
 }
 
-// NewMockAlbumRepo creates a new mock instance.
-func NewMockAlbumRepo(ctrl *gomock.Controller) *MockAlbumRepo {
-	mock := &MockAlbumRepo{ctrl: ctrl}
-	mock.recorder = &MockAlbumRepoMockRecorder{mock}
+// NewMockRepo creates a new mock instance.
+func NewMockRepo(ctrl *gomock.Controller) *MockRepo {
+	mock := &MockRepo{ctrl: ctrl}
+	mock.recorder = &MockRepoMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockAlbumRepo) EXPECT() *MockAlbumRepoMockRecorder {
+func (m *MockRepo) EXPECT() *MockRepoMockRecorder {
 	return m.recorder
 }
 
 // AlbumByID mocks base method.
-func (m *MockAlbumRepo) AlbumByID(id string) (albums.Album, bool) {
+func (m *MockRepo) AlbumByID(id string) (albums.Album, bool) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AlbumByID", id)
 	ret0, _ := ret[0].(albums.Album)
@@ -44,13 +44,13 @@ func (m *MockAlbumRepo) AlbumByID(id string) (albums.Album, bool) {
 }
 
 // AlbumByID indicates an expected call of AlbumByID.
-func (mr *MockAlbumRepoMockRecorder) AlbumByID(id interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) AlbumByID(id interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AlbumByID", reflect.TypeOf((*MockAlbumRepo)(nil).AlbumByID), id)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AlbumByID", reflect.TypeOf((*MockRepo)(nil).AlbumByID), id)
 }
 
 // Albums mocks base method.
-func (m *MockAlbumRepo) Albums() []albums.Album {
+func (m *MockRepo) Albums() []albums.Album {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Albums")
 	ret0, _ := ret[0].([]albums.Album)
@@ -58,13 +58,13 @@ func (m *MockAlbumRepo) Albums() []albums.Album {
 }
 
 // Albums indicates an expected call of Albums.
-func (mr *MockAlbumRepoMockRecorder) Albums() *gomock.Call {
+func (mr *MockRepoMockRecorder) Albums() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Albums", reflect.TypeOf((*MockAlbumRepo)(nil).Albums))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Albums", reflect.TypeOf((*MockRepo)(nil).Albums))
 }
 
 // CreateAlbum mocks base method.
-func (m *MockAlbumRepo) CreateAlbum(album albums.Album) albums.Album {
+func (m *MockRepo) CreateAlbum(album albums.Album) albums.Album {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateAlbum", album)
 	ret0, _ := ret[0].(albums.Album)
@@ -72,7 +72,7 @@ func (m *MockAlbumRepo) CreateAlbum(album albums.Album) albums.Album {
 }
 
 // CreateAlbum indicates an expected call of CreateAlbum.
-func (mr *MockAlbumRepoMockRecorder) CreateAlbum(album interface{}) *gomock.Call {
+func (mr *MockRepoMockRecorder) CreateAlbum(album interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAlbum", reflect.TypeOf((*MockAlbumRepo)(nil).CreateAlbum), album)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAlbum", reflect.TypeOf((*MockRepo)(nil).CreateAlbum), album)
 }

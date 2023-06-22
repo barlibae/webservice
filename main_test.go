@@ -14,7 +14,7 @@ import (
 
 var _ = Describe("Albums web service tests", func() {
 	var mockCtrl *gomock.Controller
-	var repo *mocks.MockAlbumRepo
+	var repo *mocks.MockRepo
 	var router *gin.Engine
 	var album = albums.Album{
 		ID:     "100",
@@ -25,7 +25,7 @@ var _ = Describe("Albums web service tests", func() {
 
 	BeforeEach(func() {
 		mockCtrl = gomock.NewController(GinkgoT())
-		repo = mocks.NewMockAlbumRepo(mockCtrl)
+		repo = mocks.NewMockRepo(mockCtrl)
 		router = newRouter(repo)
 	})
 

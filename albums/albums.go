@@ -1,11 +1,5 @@
 package albums
 
-import (
-	"sync"
-
-	"github.com/google/uuid"
-)
-
 // run go install github.com/golang/mock/mockgen@v1.6.0 to install mockgen
 //go:generate mockgen -source=albums.go -destination=mocks/albums.go -package mocks
 
@@ -17,53 +11,45 @@ type Album struct {
 	Price  float64 `json:"price"`
 }
 
-type AlbumRepo interface {
+type Repo interface {
 	CreateAlbum(album Album) Album
 	Albums() []Album
 	AlbumByID(id string) (Album, bool)
 }
 
-var demoAlbums = map[string]Album{
-	"1": {ID: "1", Title: "Blue Train", Artist: "John Coltrane", Price: 56.99},
-	"2": {ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
-	"3": {ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
-}
-
 type inMemoryRepo struct {
-	albums *sync.Map
+	albums []Album
 }
 
-func NewAlbumRepo() AlbumRepo {
-	albumsMap := sync.Map{}
-
-	for k, v := range demoAlbums {
-		albumsMap.Store(k, v)
+func NewRepo() Repo {
+	// albums slice to seed record album data.
+	var albums = []Album{
+		{ID: "1", Title: "Blue Train", Artist: "John Coltrane", Price: 56.99},
+		{ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
+		{ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
 	}
-
 	return &inMemoryRepo{
-		albums: &albumsMap,
+		albums: albums,
 	}
 }
 
 func (r *inMemoryRepo) CreateAlbum(album Album) Album {
-	album.ID = uuid.New().String()
-	r.albums.Store(album.ID, album)
+	// Add the new album to the slice.
+	r.albums = append(r.albums, album)
 	return album
 }
 
 func (r *inMemoryRepo) Albums() []Album {
-	albums := make([]Album, 0)
-	r.albums.Range(func(_, value any) bool {
-		albums = append(albums, value.(Album))
-		return true
-	})
-	return albums
+	return r.albums
 }
 
 func (r *inMemoryRepo) AlbumByID(id string) (Album, bool) {
-	a, found := r.albums.Load(id)
-	if !found {
-		return Album{}, false
+	// Loop through the list of albums, looking for
+	// an album whose ID value matches the parameter.
+	for _, a := range r.albums {
+		if a.ID == id {
+			return a, true
+		}
 	}
-	return a.(Album), true
+	return Album{}, false
 }

@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	repo := albums.NewAlbumRepo()
+	repo := albums.NewRepo()
 	router := newRouter(repo)
 	router.Run("localhost:8080")
 }

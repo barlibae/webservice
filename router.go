@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func newRouter(repo albums.AlbumRepo) *gin.Engine {
+func newRouter(repo albums.Repo) *gin.Engine {
 	ginRouter := gin.Default()
 	ginRouter.GET("/albums", getAlbums(repo))
 	ginRouter.GET("/albums/:id", getAlbumByID(repo))
@@ -16,14 +16,14 @@ func newRouter(repo albums.AlbumRepo) *gin.Engine {
 }
 
 // getAlbums responds with the list of all albums as JSON.
-func getAlbums(albumRepo albums.AlbumRepo) gin.HandlerFunc {
+func getAlbums(albumRepo albums.Repo) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.IndentedJSON(http.StatusOK, albumRepo.Albums())
 	}
 }
 
 // postAlbums adds an album from JSON received in the request body.
-func postAlbums(albumRepo albums.AlbumRepo) gin.HandlerFunc {
+func postAlbums(albumRepo albums.Repo) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var newAlbum albums.Album
 
@@ -40,7 +40,7 @@ func postAlbums(albumRepo albums.AlbumRepo) gin.HandlerFunc {
 
 // getAlbumByID locates the album whose ID value matches the id
 // parameter sent by the client, then returns that album as a response.
-func getAlbumByID(albumRepo albums.AlbumRepo) gin.HandlerFunc {
+func getAlbumByID(albumRepo albums.Repo) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		id := c.Param("id")
 
